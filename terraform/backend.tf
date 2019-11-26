@@ -1,22 +1,15 @@
 provider "google" {
   project = "getbooks-195414"
   region  = "us-central1"
+
 }
 
-resource "google_compute_instance" "vm_instance" {
-  name         = "terraform-instance"
-  machine_type = "f1-micro"
+# Using a single workspace:
 
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-9"
-    }
-  }
+terraform {
+  required_version = "~> 0.12.0"
 
-  network_interface {
-    # A default network is created for all GCP projects
-    network = "${google_compute_network.vpc_network.self_link}"
-  }
+  backend "remote" {}
 }
 
 resource "google_compute_network" "vpc_network" {
